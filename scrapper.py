@@ -10,7 +10,8 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException        
 
 # TODO: documen :'(
-class ExploitDBCrawler:
+# TODO add cache so if it hangs it can cntinue when it left
+class ExploitDBScrapper:
     BASE_URL = 'https://www.exploit-db.com'
     TABLE_ID = 'exploits-table'
     TR_TAG = 'tr'
@@ -22,7 +23,7 @@ class ExploitDBCrawler:
         self.timeout = timeout
         
     # TODO: add functionality to crawl over several pages and wait n seconds between calls (variable timeout)
-    def crawl(self):
+    def scrap(self):
         driver = webdriver.Chrome()
         driver.get(self.BASE_URL)
         table_id = driver.find_element(By.ID, self.TABLE_ID)
@@ -59,6 +60,3 @@ class ExploitDBCrawler:
         with open('exploit.csv', 'w') as exploit_file:
             exploit_file.writelines(f"{row}\n" for row in self.csv)
             
-        
-crawler = ExploitDBCrawler(20, 1)
-crawler.crawl()

@@ -34,15 +34,23 @@
 import argparse
 import sys
 from scrapper import ExploitDBScrapper
+from ranker import Ranker
+from os import path
 
 
 def scrap(num_pages, timeout):
-    scrapper = ExploitDBScrapper(num_pages,  timeout)
+    scrapper = ExploitDBScrapper(num_pages, timeout)
     scrapper.scrap()
 
-def query(q):
-    print(q)
 
+def query(q):
+    if not path.exists("./exploit.csv"):
+        print('please run scrap command first')
+        return
+    ranker = Ranker()
+    #ranker.get_rank()
+    print(q)
+    
 
 def main():
     FUNCTION_MAP = {'scrap': scrap, 'query': query}
